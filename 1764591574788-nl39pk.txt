@@ -1,6 +1,0 @@
-Site,Dernier accident
-Apprieu,12/06/2025
-Apprieu 2,02/07/2025
-Colombe,27/05/2025
-Ombrée,06/06/2025
-Virieu,15/05/2025
