@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Grille de points élégante */
+        .dot-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
+        }
+
+        /* Particules minimalistes */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(var(--drift));
+                opacity: 0;
+            }
+        }
+
+        /* Container principal */
+        .container {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Année 2026 - Design élégant */
+        .year {
+            font-size: 220px;
+            font-weight: 200;
+            letter-spacing: 30px;
+            color: #ffffff;
+            text-shadow: 
+                0 0 40px rgba(255, 255, 255, 0.5),
+                0 0 80px rgba(78, 205, 196, 0.3),
+                0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: yearGlow 4s ease-in-out infinite;
+            position: relative;
+            padding-left: 30px; /* Compense le letter-spacing */
+        }
+
+        @keyframes yearGlow {
+            0%, 100% {
+                text-shadow: 
+                    0 0 40px rgba(255, 255, 255, 0.5),
+                    0 0 80px rgba(78, 205, 196, 0.3),
+                    0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                text-shadow: 
+                    0 0 60px rgba(255, 255, 255, 0.8),
+                    0 0 120px rgba(78, 205, 196, 0.5),
+                    0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        /* Ligne décorative sous l'année */
+        .decorative-line {
+            width: 400px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            margin: 60px auto 40px;
+            animation: lineGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes lineGlow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+                opacity: 0.7;
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+                opacity: 1;
+            }
+        }
+
+        /* Route vers 2026 */
+        .road-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            perspective: 1000px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .road {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 400px;
+            height: 600px;
+            transform-origin: bottom center;
+            transform: translateX(-50%) rotateX(60deg);
+        }
+
+        /* Ligne centrale de la route */
+        .road-line {
+            position: absolute;
+            left: 50%;
+            width: 8px;
+            height: 80px;
+            background: linear-gradient(to bottom, rgba(255, 215, 0, 0), rgba(255, 215, 0, 0.9));
+            margin-left: -4px;
+            border-radius: 4px;
+            animation: roadMove 2s linear infinite;
+        }
+
+        @keyframes roadMove {
+            0% {
+                bottom: 100%;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                bottom: -80px;
+                opacity: 0;
+            }
+        }
+
+        /* Bords de la route */
+        .road-edge {
+            position: absolute;
+            width: 4px;
+            height: 60px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6));
+            border-radius: 2px;
+            animation: roadMove 2s linear infinite;
+        }
+
+        .road-edge.left {
+            left: 20%;
+        }
+
+        .road-edge.right {
+            right: 20%;
+        }
+
+        /* Points lumineux le long de la route */
+        .road-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(78, 205, 196, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.6);
+            animation: roadMove 3s linear infinite;
+        }
+
+        /* Rayons de lumière depuis 2026 */
+        .sunray {
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            width: 2px;
+            height: 300px;
+            background: linear-gradient(to bottom, rgba(255, 215, 0, 0.4), transparent);
+            transform-origin: top center;
+            animation: rayRotate 20s linear infinite;
+        }
+
+        @keyframes rayRotate {
+            from { transform: translateX(-50%) rotate(0deg); }
+            to { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        /* Phrase de vœux */
+        .wishes {
+            font-size: 36px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.95);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 2s ease-out 0.5s backwards;
+        }
+
+        .wishes-sub {
+            font-size: 32px;
+            font-weight: 300;
+            color: rgba(255, 215, 0, 0.95);
+            letter-spacing: 2px;
+            font-style: italic;
+            margin-bottom: 50px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            animation: fadeIn 2s ease-out 0.8s backwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Nom de l'entreprise */
+        .company {
+            font-size: 32px;
+            font-weight: 400;
+            color: rgba(78, 205, 196, 0.9);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+            animation: fadeIn 2s ease-out 1s backwards;
+        }
+
+        /* Cercles décoratifs autour de l'année */
+        .orbit-circle {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Points lumineux subtils */
+        .glow-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(78, 205, 196, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.8);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+        }
+
+        /* Vague lumineuse en arrière-plan */
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(78, 205, 196, 0.1) 0%, transparent 70%);
+            animation: waveMove 8s ease-in-out infinite;
+        }
+
+        @keyframes waveMove {
+            0%, 100% {
+                transform: scale(1) translate(-50%, -50%);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.1) translate(-50%, -50%);
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dot-grid"></div>
+    
+    <div class="wave" style="left: 50%; top: 50%;"></div>
+
+    <!-- Route vers 2026 -->
+    <div class="road-container">
+        <div class="road" id="road"></div>
+    </div>
+
+    <div class="container" id="mainContainer">
+        <!-- Rayons depuis 2026 -->
+        <div class="year">2026</div>
+        <div class="decorative-line"></div>
+        <div class="wishes">Nos meilleurs vœux de réussite</div>
+        <div class="wishes-sub">Le meilleur est à venir</div>
+        <div class="company">Chapel Hydraulique</div>
+    </div>
+
+    <script>
+        // Particules flottantes élégantes
+        function createParticles() {
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                
+                const drift = (Math.random() - 0.5) * 100;
+                particle.style.setProperty('--drift', drift + 'px');
+                
+                document.body.appendChild(particle);
+            }
+        }
+
+        // Route animée vers 2026
+        function createRoad() {
+            const road = document.getElementById('road');
+            
+            // Lignes centrales de la route
+            for (let i = 0; i < 8; i++) {
+                const line = document.createElement('div');
+                line.className = 'road-line';
+                line.style.animationDelay = (i * 0.25) + 's';
+                road.appendChild(line);
+            }
+
+            // Bords de la route (gauche)
+            for (let i = 0; i < 10; i++) {
+                const edge = document.createElement('div');
+                edge.className = 'road-edge left';
+                edge.style.animationDelay = (i * 0.2) + 's';
+                road.appendChild(edge);
+            }
+
+            // Bords de la route (droite)
+            for (let i = 0; i < 10; i++) {
+                const edge = document.createElement('div');
+                edge.className = 'road-edge right';
+                edge.style.animationDelay = (i * 0.2) + 's';
+                road.appendChild(edge);
+            }
+
+            // Points lumineux le long de la route
+            for (let i = 0; i < 15; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'road-dot';
+                dot.style.left = (20 + Math.random() * 60) + '%';
+                dot.style.animationDelay = (i * 0.2) + 's';
+                road.appendChild(dot);
+            }
+        }
+
+        // Rayons de lumière depuis 2026
+        function createSunrays() {
+            const container = document.getElementById('mainContainer');
+            const rayCount = 24;
+            
+            for (let i = 0; i < rayCount; i++) {
+                const ray = document.createElement('div');
+                ray.className = 'sunray';
+                ray.style.transform = `translateX(-50%) rotate(${(360 / rayCount) * i}deg)`;
+                ray.style.animationDelay = (i * 0.1) + 's';
+                container.appendChild(ray);
+            }
+        }
+
+        // Cercles orbitaux autour de l'année
+        function createOrbitCircles() {
+            const container = document.querySelector('.container');
+            const sizes = [500, 650, 800];
+            
+            sizes.forEach((size, index) => {
+                const circle = document.createElement('div');
+                circle.className = 'orbit-circle';
+                circle.style.width = size + 'px';
+                circle.style.height = size + 'px';
+                circle.style.left = '50%';
+                circle.style.top = '50%';
+                circle.style.marginLeft = -(size / 2) + 'px';
+                circle.style.marginTop = -(size / 2) + 'px';
+                circle.style.animationDuration = (40 + index * 10) + 's';
+                circle.style.animationDirection = index % 2 === 0 ? 'normal' : 'reverse';
+                container.appendChild(circle);
+            });
+        }
+
+        // Points lumineux décoratifs
+        function createGlowDots() {
+            const container = document.querySelector('.container');
+            const positions = [
+                { left: '10%', top: '20%', delay: '0s' },
+                { left: '90%', top: '25%', delay: '0.5s' },
+                { left: '15%', top: '75%', delay: '1s' },
+                { left: '85%', top: '70%', delay: '1.5s' },
+                { left: '50%', top: '10%', delay: '2s' },
+                { left: '50%', top: '90%', delay: '2.5s' }
+            ];
+
+            positions.forEach(pos => {
+                const dot = document.createElement('div');
+                dot.className = 'glow-dot';
+                dot.style.left = pos.left;
+                dot.style.top = pos.top;
+                dot.style.animationDelay = pos.delay;
+                container.appendChild(dot);
+            });
+        }
+
+        // Initialisation
+        createParticles();
+        createRoad();
+        createSunrays();
+        createOrbitCircles();
+        createGlowDots();
+
+        // Effet de respiration subtil sur le conteneur
+        const container = document.querySelector('.container');
+        let scale = 1;
+        let growing = true;
+        
+        setInterval(() => {
+            if (growing) {
+                scale += 0.0002;
+                if (scale >= 1.01) growing = false;
+            } else {
+                scale -= 0.0002;
+                if (scale <= 0.99) growing = true;
+            }
+            container.style.transform = `scale(${scale})`;
+        }, 50);
+    </script>
+</body>
+</html>
